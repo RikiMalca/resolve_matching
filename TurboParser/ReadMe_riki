@@ -1,0 +1,13 @@
+The additional functionality added by Riki:
+
+The algorithm can be performed with one of the following options:
+=> firstIterationScores: This decoding method tests the best tree accorsing to the u value calculated by ilan's algorithm in the first iteration.
+			after calculating the new scores we run ChuLiuEdmonds algorithm.
+			performance:
+				-) from the sample input trainign and testing: slower& more accurate when using in the testing, while ilan's minLoss is being used in the training phase.
+=> firstIterationBuildGreedy: more accurate. still not fast enough.
+
+
+
+
+
