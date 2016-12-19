@@ -1,0 +1,42 @@
+Tagger
+DependencyInstance
+DependencyReader
+DependencyWriter
+DependencyDecoder
+DependencyPipe
+DependencyPart
+DependencyOptions
+DependencyFeatures
+DependencyDictionary
+DependencyInstanceNumeric
+
+
+g++  -g -O2   -o TurboTagger SequenceFeatures.o SequenceInstanceNumeric.o SequenceWriter.o SequenceDecoder.o SequencePipe.o SequenceOptions.o TokenDictionary.o SequenceDictionary.o SequenceInstance.o SequenceReader.o SequencePart.o TurboTagger.o Alphabet.o Dictionary.o Reader.o Parameters.o Pipe.o Writer.o Options.o AlgUtils.o SerializationUtils.o StringUtils.o TimeUtils.o ../parser/DependencyInstance.o ../parser/DependencyReader.o ../parser/DependencyWriter.o ../parser/DependencyDecoder.o ../parser/DependencyPipe.o ../parser/DependencyPart.o ../parser/DependencyOptions.o ../parser/DependencyFeatures.o ../parser/DependencyDictionary.o ../parser/DependencyInstanceNumeric.o -L../../deps/local/lib -lad3 -lgflags -lglog
+
+
+
+Parser
+SequenceInstance
+
+
+./src/parser/TurboParser --train --file_train=data/sample/sample_train.conll --file_model=models/sample_parser.model --logtostderr
+
+
+./src/parser/TurboParser --test \
+--evaluate \
+--file_model=models/sample_parser.model \
+--file_test=data/sample/sample_test.conll \
+--file_prediction=data/sample/sample_test.conll.predicted \
+--logtostderr
+
+
+------------------------
+
+./src/parser/TurboParser --train --file_train=data/train/english_ptb_train.conll --file_model=models/sample_parser.model --logtostderr >> out_english_2.txt
+
+./src/parser/TurboParser --test \
+--evaluate \
+--file_model=models/sample_parser.model \
+--file_test=data/test/english_ptb_test.conll \
+--file_prediction=data/sample/sample_test.conll.predicted \
+--logtostderr>> out_english_2_test.txt
