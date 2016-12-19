@@ -17,7 +17,7 @@ old_library='libglog.a'
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/home/riki/Desktop/ILAN/Turbo-parser-master/deps/local/lib /home/riki/Desktop/ILAN/Turbo-parser-master/deps/local/lib/libgflags.la -lpthread'
+dependency_libs=' -L/home/riki/Desktop/projects/resolve_matching/TurboParser/deps/local/lib /home/riki/Desktop/projects/resolve_matching/TurboParser/deps/local/lib/libgflags.la -lpthread'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/riki/Desktop/ILAN/Turbo-parser-master/deps/local/lib'
+libdir='/home/riki/Desktop/projects/resolve_matching/TurboParser/deps/local/lib'

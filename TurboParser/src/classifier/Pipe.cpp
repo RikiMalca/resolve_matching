@@ -310,14 +310,14 @@ void Pipe::Train() {
   parameters_->Initialize(options_->use_averaging());
 
   if (options_->only_supported_features()) MakeSupportedParameters();
-  LOG(INFO) << "training with ilan_decoding = " << options_->ilan_decoding() << " and trainAlgorithm = " << options_->GetTrainingAlgorithm();
-  LOG(INFO) << "training with riki_decoding = " << options_->riki_decoding() << " and trainAlgorithm = " << options_->GetTrainingAlgorithm();
+  //LOG(INFO) << "training with ilan_decoding = " << options_->ilan_decoding() << " and trainAlgorithm = " << options_->GetTrainingAlgorithm();
+  //LOG(INFO) << "training with riki_decoding = " << options_->riki_decoding() << " and trainAlgorithm = " << options_->GetTrainingAlgorithm();
 
   for (int i = 0; i < options_->GetNumEpochs(); ++i) {
     TrainEpoch(i);
   }
 
-  parameters_->Finalize(options_->GetNumEpochs() * instances_.size());
+  //parameters_->Finalize(options_->GetNumEpochs() * instances_.size());
 }
 
 void Pipe::CreateInstances() {
@@ -413,11 +413,13 @@ void Pipe::TrainEpoch(int epoch) {
     MakeParts(instance, parts, &gold_outputs);
     ilansPrints && cout << "made parts" << endl;
     MakeFeatures(instance, parts, features);
-    ilansPrints && cout << "made features" << endl;
-    ilansPrints && cout << "training with " << options_->GetTrainingAlgorithm() << endl;
+  }
+    //ilansPrints && cout << "made features" << endl;
+    //ilansPrints && cout << "training with " << options_->GetTrainingAlgorithm() << endl;
     // If using only supported features, must remove the unsupported ones.
     // This is necessary not to mess up the computation of the squared norm
     // of the feature difference vector in MIRA.
+    /*
     if (options_->only_supported_features()) {
       RemoveUnsupportedFeatures(instance, parts, features);
     }
@@ -425,6 +427,7 @@ void Pipe::TrainEpoch(int epoch) {
     timeval start_scores, end_scores;
     gettimeofday(&start_scores, NULL);
     ComputeScores(instance, parts, features, &scores);
+
     ilansPrints && cout << "computed scores" << endl;
     gettimeofday(&end_scores, NULL);
     time_scores += diff_ms(end_scores, start_scores);
@@ -557,6 +560,7 @@ void Pipe::TrainEpoch(int epoch) {
             << "Total Loss: " << total_loss << "\t"
             << "Total Reg: " << regularization_value << "\t"
             << "Total Loss+Reg: " << total_loss + regularization_value << endl;
+*/
 }
 
 void Pipe::Run() {
@@ -585,7 +589,7 @@ void Pipe::Run() {
     ComputeScores(formatted_instance, parts, features, &scores);
     gettimeofday(&end_score_computing, NULL);
 //    static_cast<DependencyInstanceNumeric*>(instance);
-    gettimeofday(&start_decoding, NULL);
+    /*gettimeofday(&start_decoding, NULL);
     decoder_->Decode(formatted_instance, parts, scores, &predicted_outputs);
     gettimeofday(&end_decoding, NULL);
     LOG(INFO) << "=========================================" <<endl;
@@ -607,7 +611,7 @@ void Pipe::Run() {
     delete instance;
 
     instance = reader_->GetNext();
-    ++num_instances;
+    ++num_instances;*/
   }
 
   delete parts;

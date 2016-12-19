@@ -117,8 +117,8 @@ stl_logging_unittest-stl_logging_unittest.o: src/stl_logging_unittest.cc \
  /usr/include/x86_64-linux-gnu/bits/unistd.h \
  /usr/lib/gcc/x86_64-linux-gnu/5/include/stdint.h /usr/include/stdint.h \
  /usr/include/inttypes.h \
- /home/riki/Desktop/ILAN/Turbo-parser-master/deps/local/include/gflags/gflags.h \
- /home/riki/Desktop/ILAN/Turbo-parser-master/deps/local/include/gflags/gflags_declare.h \
+ /home/riki/Desktop/projects/resolve_matching/TurboParser/deps/local/include/gflags/gflags.h \
+ /home/riki/Desktop/projects/resolve_matching/TurboParser/deps/local/include/gflags/gflags_declare.h \
  src/glog/log_severity.h src/glog/vlog_is_on.h src/googletest.h \
  src/utilities.h src/base/mutex.h src/config.h /usr/include/assert.h \
  /usr/include/setjmp.h /usr/include/x86_64-linux-gnu/bits/setjmp2.h \
@@ -471,9 +471,9 @@ src/glog/logging.h:
 
 /usr/include/inttypes.h:
 
-/home/riki/Desktop/ILAN/Turbo-parser-master/deps/local/include/gflags/gflags.h:
+/home/riki/Desktop/projects/resolve_matching/TurboParser/deps/local/include/gflags/gflags.h:
 
-/home/riki/Desktop/ILAN/Turbo-parser-master/deps/local/include/gflags/gflags_declare.h:
+/home/riki/Desktop/projects/resolve_matching/TurboParser/deps/local/include/gflags/gflags_declare.h:
 
 src/glog/log_severity.h:
 

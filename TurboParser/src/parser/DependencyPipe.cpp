@@ -116,6 +116,7 @@ void DependencyPipe::ComputeScores(Instance *instance, Parts *parts,
       continue;
     }
     (*scores)[r] = parameters->ComputeScore(part_features);
+    cout << "r: " << r << " Score: " << (*scores)[r] << endl;
   }
 }
 
@@ -1231,9 +1232,9 @@ void DependencyPipe::MakePartsGlobal(Instance *instance,
                                     vector<double> *gold_outputs, bool ilansChanges) {
   DependencyOptions *dependency_options = GetDependencyOptions();
   DependencyParts *dependency_parts = static_cast<DependencyParts*>(parts);
-  bool ilansP = false;
+  bool ilansP = true;
   int num_parts_initial = dependency_parts->size();
-  ilansP && cout << "use arbitrary siblings = " << dependency_options->use_arbitrary_siblings() << endl;
+  ilansP && LOG(INFO) << "use arbitrary siblings = " << dependency_options->use_arbitrary_siblings() << endl;
   if (dependency_options->use_arbitrary_siblings()) {
     MakePartsArbitrarySiblings(instance, parts, gold_outputs);
   }
@@ -1241,7 +1242,7 @@ void DependencyPipe::MakePartsGlobal(Instance *instance,
       dependency_parts->size() - num_parts_initial);
 
   num_parts_initial = dependency_parts->size();
-  ilansP && cout << "use consecutive siblings = " << dependency_options->use_consecutive_siblings() << endl;
+  ilansP && LOG(INFO) << "use consecutive siblings = " << dependency_options->use_consecutive_siblings() << endl;
   if (dependency_options->use_consecutive_siblings()) {
     MakePartsConsecutiveSiblings(instance, parts, gold_outputs);
   }
@@ -1249,7 +1250,7 @@ void DependencyPipe::MakePartsGlobal(Instance *instance,
       dependency_parts->size() - num_parts_initial);
 
   num_parts_initial = dependency_parts->size();
-  ilansP && cout << "use gp = " << dependency_options->use_grandparents() << endl;
+  ilansP && LOG(INFO) << "use gp = " << dependency_options->use_grandparents() << endl;
   if (dependency_options->use_grandparents()) {
     MakePartsGrandparents(instance, parts, gold_outputs, ilansChanges);
   }
@@ -1258,7 +1259,7 @@ void DependencyPipe::MakePartsGlobal(Instance *instance,
 
   num_parts_initial = dependency_parts->size();
   if (dependency_options->use_grandsiblings()) {
-	ilansP && cout << "use grandSiblings = " << dependency_options->use_grandsiblings() << endl;
+	ilansP && LOG(INFO) << "use grandSiblings = " << dependency_options->use_grandsiblings() << endl;
 	if (dependency_options->ilan_decoding() != "") {
 		MakePartsGrandSiblingsIlan(instance, parts, gold_outputs);
 	} else {
@@ -1269,7 +1270,7 @@ void DependencyPipe::MakePartsGlobal(Instance *instance,
       dependency_parts->size() - num_parts_initial);
 
   num_parts_initial = dependency_parts->size();
-  ilansP && cout << "use triSiblings = " << dependency_options->use_trisiblings() << endl;
+  ilansP && LOG(INFO) << "use triSiblings = " << dependency_options->use_trisiblings() << endl;
   if (dependency_options->use_trisiblings()) {
 	  if (dependency_options->ilan_decoding() != "") {
 		  MakePartsTriSiblingsIlan(instance, parts, gold_outputs);
@@ -1282,14 +1283,14 @@ void DependencyPipe::MakePartsGlobal(Instance *instance,
 
   num_parts_initial = dependency_parts->size();
   if (dependency_options->use_nonprojective_arcs()) {
-	ilansP && cout << "use nonProj arcs = " << dependency_options->use_nonprojective_arcs() << endl;
+	ilansP && LOG(INFO) << "use nonProj arcs = " << dependency_options->use_nonprojective_arcs() << endl;
     MakePartsNonprojectiveArcs(instance, parts, gold_outputs);
   }
   dependency_parts->SetOffsetNonproj(num_parts_initial,
       dependency_parts->size() - num_parts_initial);
 
   num_parts_initial = dependency_parts->size();
-  ilansP && cout << "use directed paths = " << dependency_options->use_directed_paths() << endl;
+  ilansP && LOG(INFO) << "use directed paths = " << dependency_options->use_directed_paths() << endl;
   if (dependency_options->use_directed_paths()) {
     MakePartsDirectedPaths(instance, parts, gold_outputs);
   }
@@ -1297,7 +1298,7 @@ void DependencyPipe::MakePartsGlobal(Instance *instance,
       dependency_parts->size() - num_parts_initial);
 
   num_parts_initial = dependency_parts->size();
-  ilansP && cout << "use head bigrams= " << dependency_options->use_head_bigrams() << endl;
+  ilansP && LOG(INFO) << "use head bigrams= " << dependency_options->use_head_bigrams() << endl;
   if (dependency_options->use_head_bigrams()) {
     MakePartsHeadBigrams(instance, parts, gold_outputs);
   }
@@ -1344,7 +1345,7 @@ bool DependencyPipe::IsProjectiveArc(const vector<int> &heads,
   return true;
 }
 
-void DependencyPipe::MakeSelectedFeatures(Instance *instance,
+void DependencyPipe::MakeSelectedFeatures_backup(Instance *instance,
                                           Parts *parts,
                                           bool pruner,
                                           const vector<bool>& selected_parts,
@@ -1375,6 +1376,40 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
                                           arc->modifier());
     }
   }
+}
+void DependencyPipe::MakeSelectedFeatures(Instance *instance,
+                                          Parts *parts,
+                                          bool pruner,
+                                          const vector<bool>& selected_parts,
+                                          Features *features) {
+  DependencyInstanceNumeric *sentence =
+    static_cast<DependencyInstanceNumeric*>(instance);
+  DependencyParts *dependency_parts = static_cast<DependencyParts*>(parts);
+  DependencyFeatures *dependency_features =
+    static_cast<DependencyFeatures*>(features);
+  int sentence_length = sentence->size();
+
+  dependency_features->Initialize(instance, parts);
+
+  // Even in the case of labeled parsing, build features for unlabeled arcs
+  // only. They will later be conjoined with the labels.
+  int offset, size;
+  dependency_parts->GetOffsetArc(&offset, &size);
+  for (int r = offset; r < offset + size; ++r) {
+    if (!selected_parts[r]) continue;
+    DependencyPartArc *arc =
+      static_cast<DependencyPartArc*>((*dependency_parts)[r]);
+    CHECK_GE(arc->head(), 0);
+    cout << "Part: " << r << endl;
+    cout<< "Part Type: " << DEPENDENCYPART_ARC << endl;
+    if (pruner) {
+      dependency_features->AddArcFeaturesLight(sentence, r, arc->head(),
+                                               arc->modifier());
+    } else {
+      dependency_features->AddArcFeatures(sentence, r, arc->head(),
+                                          arc->modifier());
+    }
+  }
 
   // Build features for arbitrary siblings.
   dependency_parts->GetOffsetSibl(&offset, &size);
@@ -1384,6 +1419,8 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     DependencyPartSibl *part =
       static_cast<DependencyPartSibl*>((*dependency_parts)[r]);
     CHECK_EQ(part->type(), DEPENDENCYPART_SIBL);
+    cout << "Part: " << r << endl;
+    cout<< "Part Type: " << DEPENDENCYPART_SIBL << endl;
     dependency_features->AddArbitrarySiblingFeatures(sentence, r,
       part->head(), part->modifier(), part->sibling());
   }
@@ -1395,6 +1432,8 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     if (!selected_parts[r]) continue;
     DependencyPartNextSibl *part =
       static_cast<DependencyPartNextSibl*>((*dependency_parts)[r]);
+    cout << "Part: " << r << endl;
+    cout<< "Part Type: " << DEPENDENCYPART_NEXTSIBL << endl;
     CHECK_EQ(part->type(), DEPENDENCYPART_NEXTSIBL);
     dependency_features->AddConsecutiveSiblingFeatures(sentence, r,
       part->head(), part->modifier(), part->next_sibling());
@@ -1407,6 +1446,8 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     if (!selected_parts[r]) continue;
     DependencyPartGrandpar *part =
       static_cast<DependencyPartGrandpar*>((*dependency_parts)[r]);
+    cout << "Part: " << r << endl;
+    cout<< "Part Type: " << DEPENDENCYPART_GRANDPAR << endl;
     CHECK_EQ(part->type(), DEPENDENCYPART_GRANDPAR);
     CHECK_LE(part->modifier(), sentence_length);
     dependency_features->AddGrandparentFeatures(sentence, r,
@@ -1420,6 +1461,8 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     if (!selected_parts[r]) continue;
     DependencyPartGrandSibl *part =
       static_cast<DependencyPartGrandSibl*>((*dependency_parts)[r]);
+    cout << "Part: " << r << endl;
+    cout<< "Part Type: " << DEPENDENCYPART_GRANDSIBL << endl;
     CHECK_EQ(part->type(), DEPENDENCYPART_GRANDSIBL);
     CHECK_LE(part->modifier(), sentence_length);
     CHECK_LE(part->sibling(), sentence_length);
@@ -1443,6 +1486,8 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     if (!selected_parts[r]) continue;
     DependencyPartTriSibl *part =
       static_cast<DependencyPartTriSibl*>((*dependency_parts)[r]);
+    cout << "Part: " << r << endl;
+    cout<< "Part Type: " << DEPENDENCYPART_TRISIBL << endl;
     CHECK_EQ(part->type(), DEPENDENCYPART_TRISIBL);
     /*
     LOG(INFO) << "AddTriSiblingFeatures: " << part->head() << " "
@@ -1464,6 +1509,8 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     if (!selected_parts[r]) continue;
     DependencyPartNonproj *part =
       static_cast<DependencyPartNonproj*>((*dependency_parts)[r]);
+    cout << "Part: " << r << endl;
+    cout<< "Part Type: " << DEPENDENCYPART_NONPROJ << endl;
     CHECK_EQ(part->type(), DEPENDENCYPART_NONPROJ);
     dependency_features->AddNonprojectiveArcFeatures(sentence, r,
       part->head(), part->modifier());
@@ -1476,6 +1523,8 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     if (!selected_parts[r]) continue;
     DependencyPartPath *part =
       static_cast<DependencyPartPath*>((*dependency_parts)[r]);
+    cout << "Part: " << r << endl;
+    cout<< "Part Type: " << DEPENDENCYPART_PATH << endl;
     CHECK_EQ(part->type(), DEPENDENCYPART_PATH);
     dependency_features->AddDirectedPathFeatures(sentence, r,
       part->ancestor(), part->descendant());
@@ -1488,6 +1537,10 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     if (!selected_parts[r]) continue;
     DependencyPartHeadBigram *part =
       static_cast<DependencyPartHeadBigram*>((*dependency_parts)[r]);
+    cout << "Part: " << r << endl;
+    cout<< "Part Type: " << DEPENDENCYPART_HEADBIGRAM << endl;
+    LOG(INFO) <<"type "<<part->type()<<endl;
+    //f(part->type()!=DEPENDENCYPART_HEADBIGRAM) continue;
     CHECK_EQ(part->type(), DEPENDENCYPART_HEADBIGRAM);
     dependency_features->AddHeadBigramFeatures(sentence, r,
       part->head(), part->modifier(), part->previous_head());

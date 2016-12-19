@@ -3357,14 +3357,14 @@ void DependencyDecoder::DecodeFactorGraph(Instance *instance, Parts *parts,
   // Currently, if flows are used, no large factors (such as head automata
   // or head bigrams) will be used. That is because adding evidence to those
   // large factors is not yet implemented.
-  if (use_nonprojective_arc_parts || use_path_parts) {
+  /*if (use_nonprojective_arc_parts || use_path_parts) {
     use_tree_factor = false;
     use_head_automata = false;
     use_trigram_head_automata = false;
     use_grandparent_head_automata = false;
     use_head_bigram_sequence_factor = false;
     add_evidence = true;
-  }
+  }*/
   bool use_flows = !use_tree_factor;
 
   // Define zero/infinity potentials (not used if add_evidence = true).

@@ -78,6 +78,7 @@ void DependencyFeatures::AddArcFeatures(DependencyInstanceNumeric* sentence,
                                        int modifier) {
   DependencyOptions *options = static_cast<class DependencyPipe*>(pipe_)->
       GetDependencyOptions();
+
   if (!options->large_feature_set()) {
     AddArcFeaturesLight(sentence, r, head, modifier);
     return;
@@ -199,7 +200,16 @@ void DependencyFeatures::AddSiblingFeatures(DependencyInstanceNumeric* sentence,
   // Add direction information.
   if (!consecutive) flags |= (direction_code_first << 6); // 1 more bit.
   flags |= (direction_code_second << 7); // 1 more bit.
-
+  bool riki_print = true;
+  if(riki_print){
+	  cout << "SPID: " << unsigned(SPID) << endl;
+	  cout << "HPID: " << unsigned(HPID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "HWID: " << unsigned(HWID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "SWID: " << unsigned(SWID) << endl;
+	  cout << "flags: " << unsigned(flags) << endl;
+  }
   // Bias feature.
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplateSibling::BIAS, flags);
   AddFeature(fkey, features);
@@ -361,6 +371,16 @@ void DependencyFeatures::AddGrandparentFeatures(
   // Add direction information.
   flags |= (direction_code << 6); // 2 more bits.
 
+  bool riki_print = true;
+  if(riki_print){
+	  cout << "GWID: " << unsigned(GWID) << endl;
+	  cout << "HPID: " << unsigned(HPID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "HWID: " << unsigned(HWID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "GPID: " << unsigned(GPID) << endl;
+	  cout << "flags: " << unsigned(flags) << endl;
+  }
   // Bias feature.
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplateGrandparent::BIAS, flags);
   AddFeature(fkey, features);
@@ -508,6 +528,18 @@ void DependencyFeatures::AddGrandSiblingFeatures(DependencyInstanceNumeric* sent
   // Add direction information.
   flags |= (direction_code << 6); // 2 more bits.
 
+  bool riki_print = true;
+  if(riki_print){
+	  cout << "GWID: " << unsigned(GWID) << endl;
+	  cout << "HPID: " << unsigned(HPID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "HWID: " << unsigned(HWID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "GPID: " << unsigned(GPID) << endl;
+	  cout << "SPID: " << unsigned(SPID) << endl;
+	  cout << "SWID: " << unsigned(SWID) << endl;
+	  cout << "flags: " << unsigned(flags) << endl;
+  }
   // Bias feature.
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplateGrandSibl::BIAS, flags);
   AddFeature(fkey, features);
@@ -595,6 +627,18 @@ void DependencyFeatures::AddTriSiblingFeatures(DependencyInstanceNumeric* senten
   // Add direction information.
   flags |= (direction_code << 6); // 1 more bit.
 
+  bool riki_print = true;
+  if(riki_print){
+	  cout << "TWID: " << unsigned(TWID) << endl;
+	  cout << "HPID: " << unsigned(HPID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "HWID: " << unsigned(HWID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "TPID: " << unsigned(TPID) << endl;
+	  cout << "SPID: " << unsigned(SPID) << endl;
+	  cout << "SWID: " << unsigned(SWID) << endl;
+	  cout << "flags: " << unsigned(flags) << endl;
+  }
   // Bias feature.
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplateTriSibl::BIAS, flags);
   AddFeature(fkey, features);
@@ -732,7 +776,15 @@ void DependencyFeatures::AddDirectedPathFeatures(
 
   // Code for feature type, mode and extended mode.
   flags = DependencyFeatureTemplateParts::PATH;
-
+  bool riki_print = true;
+  if(riki_print){
+	  cout << "AWID: " << unsigned(AWID) << endl;
+	  cout << "DWID: " << unsigned(DWID) << endl;
+	  cout << "APID: " << unsigned(APID) << endl;
+	  cout << "DPID: " << unsigned(DPID) << endl;
+	  cout << "binned_length_code: " << unsigned(binned_length_code) << endl;
+	  cout << "flags: " << unsigned(flags) << endl;
+  }
   // Bias feature.
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplatePath::BIAS, flags);
   AddFeature(fkey, features);
@@ -881,6 +933,23 @@ void DependencyFeatures::AddHeadBigramFeatures(
   // Maximum is 255 feature templates.
   CHECK_LT(DependencyFeatureTemplateBigram::COUNT, 256);
 
+  bool riki_print = true;
+  if(riki_print){
+	  cout << "JWID: " << unsigned(JWID) << endl;
+	  cout << "pMWID: " << unsigned(pMWID) << endl;
+	  cout << "HWID: " << unsigned(HWID) << endl;
+	  cout << "MWID: " << unsigned(MWID) << endl;
+	  cout << "JPID: " << unsigned(JPID) << endl;
+	  cout << "pMPID: " << unsigned(pMPID) << endl;
+	  cout << "HPID: " << unsigned(HPID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "flags_bigram: " << unsigned(flags_bigram) << endl;
+	  cout << "direction_code: " << unsigned(direction_code) << endl;
+	  cout << "direction_code_previous: " << unsigned(direction_code_previous) << endl;
+	  cout << "binned_length_code: " << unsigned(binned_length_code) << endl;
+	  cout << "crossing_arcs: " << unsigned(crossing_arcs) << endl;
+  }
+
   for (int mode = 0; mode < 2; ++mode) {
     // Code for feature type, mode and extended mode.
     flags = DependencyFeatureTemplateParts::BIGRAM;
@@ -937,6 +1006,7 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
                                              bool use_morphological_features,
                                              BinaryFeatures *features) {
   int sentence_length = sentence->size();
+  bool riki_print = true;
   // True if labeled dependency parsing.
   bool labeled =
       static_cast<DependencyOptions*>(pipe_->GetOptions())->labeled();
@@ -967,18 +1037,25 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
   exact_length_code = (arc_length > 0xff)? 0xff : arc_length;
   if (arc_length > 40) {
     binned_length_code = 0x6;
+    riki_print&& cout << "binned_length_code: 6" << endl;
   } else if (arc_length > 30) {
     binned_length_code = 0x5;
+    riki_print&& cout << "binned_length_code: 5"  << endl;
   } else if (arc_length > 20) {
     binned_length_code = 0x4;
+    riki_print&& cout << "binned_length_code: 4" << endl;
   } else if (arc_length > 10) {
     binned_length_code = 0x3;
+    riki_print&& cout << "binned_length_code: 3"  << endl;
   } else if (arc_length > 5) {
     binned_length_code = 0x2;
+    riki_print&& cout << "binned_length_code: 2"  << endl;
   } else if (arc_length > 2) {
     binned_length_code = 0x1;
+    riki_print&& cout << "binned_length_code: 1"  << endl;
   } else {
     binned_length_code = 0x0;
+    riki_print&& cout << "binned_length_code: 0"  << endl;
   }
 
   // Codewords for accommodating word/POS information.
@@ -1055,6 +1132,8 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
   pHQID = (head > 0)? sentence->GetPosId(head - 1) : TOKEN_START;
   pMQID = (modifier > 0)? sentence->GetPosId(modifier - 1) : TOKEN_START;
 
+
+
   nHLID = (head < sentence_length - 1)?
       sentence->GetLemmaId(head + 1) : TOKEN_STOP;
   nMLID = (modifier < sentence_length - 1)?
@@ -1103,6 +1182,56 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
   flags = feature_type; // 4 bits.
   flags |= (direction_code << 4); // 1 more bit.
 
+  if (riki_print){
+	  cout << "Word pair features: " << endl;
+	  cout << "HLID: " << unsigned(HLID) << endl;
+	  cout << "MLID: " << unsigned(MLID) << endl;
+	  cout << "HWID: " << unsigned(HWID)  << endl;
+	  cout << "MWID: " << unsigned(MWID) << endl;
+	  cout << "HPID: " << unsigned(HPID) << endl;
+	  cout << "MPID: " << unsigned(MPID) << endl;
+	  cout << "HQID: " << unsigned(HQID) << endl;
+	  cout << "MQID: " << unsigned(MQID) << endl;
+
+	  cout << "pHLID: " << unsigned(pHLID) << endl;
+	  cout << "pMLID: " << unsigned(pMLID) << endl;
+	  cout << "pHWID: " << unsigned(pHWID)  << endl;
+	  cout << "pMWID: " << unsigned(pMWID) << endl;
+	  cout << "pHPID: " << unsigned(pHPID) << endl;
+	  cout << "pMPID: " << unsigned(pMPID) << endl;
+	  cout << "pHQID: " << unsigned(pHQID) << endl;
+	  cout << "pMQID: " << unsigned(pMQID) << endl;
+
+	  cout << "nHLID: " << unsigned(nHLID) << endl;
+	  cout << "nMLID: " << unsigned(nMLID) << endl;
+	  cout << "nHWID: " << unsigned(nHWID)  << endl;
+	  cout << "nMWID: " << unsigned(nMWID) << endl;
+	  cout << "nHPID: " << unsigned(nHPID) << endl;
+	  cout << "nMPID: " << unsigned(nMPID) << endl;
+	  cout << "nHQID: " << unsigned(nHQID) << endl;
+	  cout << "nMQID: " << unsigned(nMQID) << endl;
+
+	  cout << "ppHLID: " << unsigned(ppHLID) << endl;
+	  cout << "ppMLID: " << unsigned(ppMLID) << endl;
+	  cout << "ppHWID: " << unsigned(ppHWID)  << endl;
+	  cout << "ppMWID: " << unsigned(ppMWID) << endl;
+	  cout << "ppHPID: " << unsigned(ppHPID) << endl;
+	  cout << "ppMPID: " << unsigned(ppMPID) << endl;
+	  cout << "ppHQID: " << unsigned(ppHQID) << endl;
+	  cout << "ppMQID: " << unsigned(ppMQID) << endl;
+
+	  cout << "nnHLID: " << unsigned(nnHLID) << endl;
+	  cout << "nnMLID: " << unsigned(nnMLID) << endl;
+	  cout << "nnHWID: " << unsigned(nnHWID) << endl;
+	  cout << "nnMWID: " << unsigned(nnMWID) << endl;
+	  cout << "nnHPID: " << unsigned(nnHPID) << endl;
+	  cout << "nnMPID: " << unsigned(nnMPID) << endl;
+	  cout << "nnHQID: " << unsigned(nnHQID) << endl;
+	  cout << "nnMQID: " << unsigned(nnMQID) << endl;
+
+	  cout << "flags: " << unsigned(flags) << endl;
+  }
+
   // Bias feature (not in EGSTRA).
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplateArc::BIAS, flags);
   AddFeature(fkey, features);
@@ -1134,7 +1263,9 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
   // would add much relevant information.
   if (use_morphological_features) {
     for (int j = 0; j < sentence->GetNumMorphFeatures(head); ++j) {
+
       HFID = sentence->GetMorphFeature(head, j);
+      riki_print &&cout << "HFID: " <<unsigned(HFID) << " j: " << j << endl;
       CHECK_LT(HFID, 0xfff);
       if (j >= 0xf) {
         LOG(WARNING) << "Too many morphological features (" << j << ")";
@@ -1165,7 +1296,9 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
     fkey = encoder_.CreateFKey_WP(DependencyFeatureTemplateArc::MWP, flags, MWID, MPID);
     AddFeature(fkey, features);
     for (int k = 0; k < sentence->GetNumMorphFeatures(modifier); ++k) {
+
       MFID = sentence->GetMorphFeature(modifier, k);
+
       CHECK_LT(MFID, 0xfff);
       if (k >= 0xf) {
         LOG(WARNING) << "Too many morphological features (" << k << ")";
@@ -1173,6 +1306,7 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
       } else {
         MFID = (MFID << 4) | ((uint16_t) k);
       }
+      riki_print &&cout << "MFID: " <<unsigned(MFID) << " k: " << k << endl;
       fkey = encoder_.CreateFKey_W(DependencyFeatureTemplateArc::MF, flags, MFID);
       AddFeature(fkey, features);
       fkey = encoder_.CreateFKey_WW(DependencyFeatureTemplateArc::MWF, flags, MWID, MFID);
@@ -1339,7 +1473,9 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
   // Morpho-syntactic features.
   if (use_morphological_features) {
     for (int j = 0; j < sentence->GetNumMorphFeatures(head); ++j) {
+
       HFID = sentence->GetMorphFeature(head, j);
+      riki_print &&cout << "HFID: " <<unsigned(HFID) << " j: " << j << endl;
       CHECK_LT(HFID, 0xfff);
       if (j >= 0xf) {
         LOG(WARNING) << "Too many morphological features (" << j << ")";
@@ -1349,6 +1485,7 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
       }
       for (int k = 0; k < sentence->GetNumMorphFeatures(modifier); ++k) {
         MFID = sentence->GetMorphFeature(modifier, k);
+
         CHECK_LT(MFID, 0xfff);
         if (k >= 0xf) {
           LOG(WARNING) << "Too many morphological features (" << k << ")";
@@ -1356,6 +1493,7 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
         } else {
           MFID = (MFID << 4) | ((uint16_t) k);
         }
+        riki_print &&cout << "MFID: " <<unsigned(MFID) << " k: " << k << endl;
         // Morphological features.
         fkey = encoder_.CreateFKey_WW(DependencyFeatureTemplateArc::HF_MF, flags, HFID, MFID);
         AddFeature(fkey, features);
@@ -1455,7 +1593,9 @@ void DependencyFeatures::AddWordPairFeatures(DependencyInstanceNumeric* sentence
   set<int> BPIDs;
   set<int> BWIDs;
   for (int i = left_position + 1; i < right_position; ++i) {
+
     BPID = sentence->GetCoarsePosId(i);
+    riki_print &&cout << "BPID: " <<unsigned(BPID) << " i: " << i << endl;
     if (BPIDs.find(BPID) == BPIDs.end()) {
       BPIDs.insert(BPID);
 

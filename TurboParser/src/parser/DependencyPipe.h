@@ -148,17 +148,21 @@ class DependencyPipe : public Pipe {
     vector<bool> selected_parts(parts->size(), true);
     MakeSelectedFeatures(instance, parts, pruner, selected_parts, features);
   }
+
   void MakeSelectedFeatures(Instance *instance, Parts *parts,
       const vector<bool>& selected_parts, Features *features) {
     // Set pruner = false unless we're training the pruner.
     MakeSelectedFeatures(instance, parts, train_pruner_, selected_parts,
                          features);
   }
+
   void MakeSelectedFeatures(Instance *instance,
                             Parts *parts,
                             bool pruner,
                             const vector<bool>& selected_parts,
                             Features *features);
+
+
 
   void ComputeScores(Instance *instance, Parts *parts, Features *features,
                      vector<double> *scores) {
@@ -186,6 +190,12 @@ class DependencyPipe : public Pipe {
                              const vector<double> &gold_output,
                              const vector<double> &predicted_output,
                              FeatureVector *difference);
+
+  void MakeSelectedFeatures_backup(Instance *instance,
+                                            Parts *parts,
+                                            bool pruner,
+                                            const vector<bool>& selected_parts,
+                                            Features *features);
 
   void MakeGradientStep(Parts *parts,
                         Features *features,
