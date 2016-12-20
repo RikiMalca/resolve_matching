@@ -313,9 +313,9 @@ void Pipe::Train() {
   //LOG(INFO) << "training with ilan_decoding = " << options_->ilan_decoding() << " and trainAlgorithm = " << options_->GetTrainingAlgorithm();
   //LOG(INFO) << "training with riki_decoding = " << options_->riki_decoding() << " and trainAlgorithm = " << options_->GetTrainingAlgorithm();
 
-  for (int i = 0; i < options_->GetNumEpochs(); ++i) {
+  //for (int i = 0; i < options_->GetNumEpochs(); ++i) {
     TrainEpoch(i);
-  }
+  //}
 
   //parameters_->Finalize(options_->GetNumEpochs() * instances_.size());
 }
