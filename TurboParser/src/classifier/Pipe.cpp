@@ -313,9 +313,9 @@ void Pipe::Train() {
   //LOG(INFO) << "training with ilan_decoding = " << options_->ilan_decoding() << " and trainAlgorithm = " << options_->GetTrainingAlgorithm();
   //LOG(INFO) << "training with riki_decoding = " << options_->riki_decoding() << " and trainAlgorithm = " << options_->GetTrainingAlgorithm();
 
-  for (int i = 0; i < options_->GetNumEpochs(); ++i) {
-    TrainEpoch(i);
-  }
+  //for (int i = 0; i < options_->GetNumEpochs(); ++i) {
+    TrainEpoch(options_->GetNumEpochs()-1);
+  //}
 
   //parameters_->Finalize(options_->GetNumEpochs() * instances_.size());
 }
@@ -399,21 +399,23 @@ void Pipe::TrainEpoch(int epoch) {
   dictionary_->StopGrowth();
   bool ilansPrints = true;
   for (int i = 0; i < instances_.size(); i++) {
+	  Parts *parts = CreateParts();
+	  Features *features = CreateFeatures();
 
 	//ilansPrints = false;
 	bool ilansP = false;
 //	if ((epoch == 4) && (i == 24123)) {
-	if ((epoch == 0) && (i == 22612)) {
-		ilansP = getTrue();
-		ilansPrints = true;
-	}
+
 	ilansPrints && cout << "iter " << i << " out of " << instances_.size() << endl;
     int t = num_instances * epoch + i;
     instance = instances_[i];
     MakeParts(instance, parts, &gold_outputs);
     ilansPrints && cout << "made parts" << endl;
     MakeFeatures(instance, parts, features);
+    delete parts;
+    delete features;
   }
+
     //ilansPrints && cout << "made features" << endl;
     //ilansPrints && cout << "training with " << options_->GetTrainingAlgorithm() << endl;
     // If using only supported features, must remove the unsupported ones.

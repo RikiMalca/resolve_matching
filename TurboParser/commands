@@ -40,3 +40,15 @@ SequenceInstance
 --file_test=data/test/english_ptb_test.conll \
 --file_prediction=data/sample/sample_test.conll.predicted \
 --logtostderr>> out_english_2_test.txt
+
+
+------------------------
+
+./src/parser/TurboParser --train --file_train=/home/riki/Desktop/2007/arabic/PADT/train/arabic_PADT_train.conll --file_model=models/sample_parser.model --logtostderr >> out_arabic_train.txt
+
+./src/parser/TurboParser --test \
+--evaluate \
+--file_model=models/sample_parser.model \
+--file_test=/home/riki/Desktop/2007/arabic/PADT/test/arabic_PADT_test.conll \
+--file_prediction=data/sample/sample_test.conll.predicted \
+--logtostderr>> out_arabic_test.txt

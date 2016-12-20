@@ -210,6 +210,7 @@ void DependencyFeatures::AddSiblingFeatures(DependencyInstanceNumeric* sentence,
 	  cout << "SWID: " << unsigned(SWID) << endl;
 	  cout << "flags: " << unsigned(flags) << endl;
   }
+  /*
   // Bias feature.
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplateSibling::BIAS, flags);
   AddFeature(fkey, features);
@@ -275,7 +276,7 @@ void DependencyFeatures::AddSiblingFeatures(DependencyInstanceNumeric* sentence,
   fkey = encoder_.CreateFKey_WW(DependencyFeatureTemplateSibling::HW_SW, flags, HWID, SWID);
   AddFeature(fkey, features);
   fkey = encoder_.CreateFKey_WW(DependencyFeatureTemplateSibling::MW_SW, flags, MWID, SWID);
-  AddFeature(fkey, features);
+  AddFeature(fkey, features); */
 }
 
 // Add features for grandparents.
@@ -381,6 +382,7 @@ void DependencyFeatures::AddGrandparentFeatures(
 	  cout << "GPID: " << unsigned(GPID) << endl;
 	  cout << "flags: " << unsigned(flags) << endl;
   }
+  /*
   // Bias feature.
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplateGrandparent::BIAS, flags);
   AddFeature(fkey, features);
@@ -445,7 +447,7 @@ void DependencyFeatures::AddGrandparentFeatures(
   fkey = encoder_.CreateFKey_WW(DependencyFeatureTemplateGrandparent::GW_MW, flags, GWID, MWID);
   AddFeature(fkey, features);
   fkey = encoder_.CreateFKey_WW(DependencyFeatureTemplateGrandparent::HW_MW, flags, HWID, MWID);
-  AddFeature(fkey, features);
+  AddFeature(fkey, features); */
 }
 
 // Add features for grand-siblings.
@@ -540,6 +542,7 @@ void DependencyFeatures::AddGrandSiblingFeatures(DependencyInstanceNumeric* sent
 	  cout << "SWID: " << unsigned(SWID) << endl;
 	  cout << "flags: " << unsigned(flags) << endl;
   }
+  /*
   // Bias feature.
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplateGrandSibl::BIAS, flags);
   AddFeature(fkey, features);
@@ -557,7 +560,7 @@ void DependencyFeatures::AddGrandSiblingFeatures(DependencyInstanceNumeric* sent
   AddFeature(fkey, features);
   fkey = encoder_.CreateFKey_WPPP(DependencyFeatureTemplateGrandSibl::GP_HP_MP_SW, flags, SWID, GPID, HPID, MPID);
   AddFeature(fkey, features);
-
+	*/
   if (FLAGS_use_pair_features_grandsibling_conjunctions) {
     if (modifier != head && sentence->IsCoordination(modifier) &&
         sibling > 0 && sibling < sentence->size()) {
@@ -640,6 +643,7 @@ void DependencyFeatures::AddTriSiblingFeatures(DependencyInstanceNumeric* senten
 	  cout << "flags: " << unsigned(flags) << endl;
   }
   // Bias feature.
+  /*
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplateTriSibl::BIAS, flags);
   AddFeature(fkey, features);
 
@@ -685,7 +689,7 @@ void DependencyFeatures::AddTriSiblingFeatures(DependencyInstanceNumeric* senten
   fkey = encoder_.CreateFKey_WP(DependencyFeatureTemplateTriSibl::MW_TP, flags, MWID, TPID);
   AddFeature(fkey, features);
   fkey = encoder_.CreateFKey_WP(DependencyFeatureTemplateTriSibl::MP_TW, flags, TWID, MPID);
-  AddFeature(fkey, features);
+  AddFeature(fkey, features); */
 }
 
 // Add features for non-projective arcs.
@@ -785,6 +789,7 @@ void DependencyFeatures::AddDirectedPathFeatures(
 	  cout << "binned_length_code: " << unsigned(binned_length_code) << endl;
 	  cout << "flags: " << unsigned(flags) << endl;
   }
+  /*
   // Bias feature.
   fkey = encoder_.CreateFKey_NONE(DependencyFeatureTemplatePath::BIAS, flags);
   AddFeature(fkey, features);
@@ -818,8 +823,9 @@ void DependencyFeatures::AddDirectedPathFeatures(
   fkey = encoder_.CreateFKey_WP(DependencyFeatureTemplatePath::AP_DW, flags, DWID, APID);
   AddFeature(fkey, features);
 
-  fkey = encoder_.CreateFKey_WP(DependencyFeatureTemplatePath::AW_DP, flags, AWID, DPID);
-  AddFeature(fkey, features);
+  fkey = encoder_.CreateFKey_W
+  P(DependencyFeatureTemplatePath::AW_DP, flags, AWID, DPID);
+  AddFeature(fkey, features);*/
 }
 
 // Add features for head bigrams.
@@ -949,7 +955,7 @@ void DependencyFeatures::AddHeadBigramFeatures(
 	  cout << "binned_length_code: " << unsigned(binned_length_code) << endl;
 	  cout << "crossing_arcs: " << unsigned(crossing_arcs) << endl;
   }
-
+  /*
   for (int mode = 0; mode < 2; ++mode) {
     // Code for feature type, mode and extended mode.
     flags = DependencyFeatureTemplateParts::BIGRAM;
@@ -992,7 +998,7 @@ void DependencyFeatures::AddHeadBigramFeatures(
     fkey = encoder_.CreateFKey_WPPPP(DependencyFeatureTemplateBigram::JP_pMP_HP_MW, flags, 
         MWID, JWID, pMPID, HPID, flags_bigram);
     AddFeature(fkey, features);
-  }
+  } */
 }
 
 // General function to add features for a pair of words (arcs, sibling words,

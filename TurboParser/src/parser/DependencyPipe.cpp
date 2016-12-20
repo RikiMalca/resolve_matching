@@ -1466,12 +1466,7 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     CHECK_EQ(part->type(), DEPENDENCYPART_GRANDSIBL);
     CHECK_LE(part->modifier(), sentence_length);
     CHECK_LE(part->sibling(), sentence_length);
-    /*
-    LOG(INFO) << "AddGrandSiblingFeatures: " << part->grandparent() << " "
-              << part->head() << " "
-              << part->modifier() << " "
-              << part->sibling();
-    */
+
     dependency_features->AddGrandSiblingFeatures(sentence, r,
                                                  part->grandparent(),
                                                  part->head(),
@@ -1489,12 +1484,7 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
     cout << "Part: " << r << endl;
     cout<< "Part Type: " << DEPENDENCYPART_TRISIBL << endl;
     CHECK_EQ(part->type(), DEPENDENCYPART_TRISIBL);
-    /*
-    LOG(INFO) << "AddTriSiblingFeatures: " << part->head() << " "
-              << part->modifier() << " "
-              << part->sibling() << " "
-              << part->other_sibling();
-    */
+
     dependency_features->AddTriSiblingFeatures(sentence, r,
                                                part->head(),
                                                part->modifier(),
@@ -1539,7 +1529,7 @@ void DependencyPipe::MakeSelectedFeatures(Instance *instance,
       static_cast<DependencyPartHeadBigram*>((*dependency_parts)[r]);
     cout << "Part: " << r << endl;
     cout<< "Part Type: " << DEPENDENCYPART_HEADBIGRAM << endl;
-    LOG(INFO) <<"type "<<part->type()<<endl;
+    //LOG(INFO) <<"type "<<part->type()<<endl;
     //f(part->type()!=DEPENDENCYPART_HEADBIGRAM) continue;
     CHECK_EQ(part->type(), DEPENDENCYPART_HEADBIGRAM);
     dependency_features->AddHeadBigramFeatures(sentence, r,
