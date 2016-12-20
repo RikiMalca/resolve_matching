@@ -315,6 +315,7 @@ void Pipe::Train() {
 
   //for (int i = 0; i < options_->GetNumEpochs(); ++i) {
     TrainEpoch(options_->GetNumEpochs()-1);
+
   //}
 
   //parameters_->Finalize(options_->GetNumEpochs() * instances_.size());
