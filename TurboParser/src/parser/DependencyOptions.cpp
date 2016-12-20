@@ -261,6 +261,6 @@ void DependencyOptions::Initialize() {
       CHECK(false) << "Unknown part in model type: " << enabled_parts[i];
     }
   }
-
+  LOG(INFO) << "...";
   CHECK(use_arc_factored) << "Arc-factored parts are mandatory in model type";
 }

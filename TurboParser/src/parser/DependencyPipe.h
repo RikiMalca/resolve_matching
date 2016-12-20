@@ -92,8 +92,10 @@ class DependencyPipe : public Pipe {
   Instance *GetFormattedInstance(Instance *instance) {
     DependencyInstanceNumeric *instance_numeric =
           new DependencyInstanceNumeric;
+    LOG(INFO) << "1";
     instance_numeric->Initialize(*GetDependencyDictionary(),
                                  static_cast<DependencyInstance*>(instance));
+    LOG(INFO) << "4";
     return instance_numeric;
   }
 

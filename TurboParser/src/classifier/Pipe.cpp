@@ -218,10 +218,12 @@ void Pipe::SaveModelByName(const string &model_name) {
 }
 
 void Pipe::LoadModelByName(const string &model_name) {
+
   FILE *fs = fopen(model_name.c_str(), "rb");
   CHECK(fs) << "Could not open model file for reading: " << model_name;
   LoadModel(fs);
   fclose(fs);
+
 }
 
 void Pipe::SaveModel(FILE* fs) {
@@ -574,23 +576,27 @@ void Pipe::Run() {
   vector<double> predicted_outputs;
 
   timeval start, end, start_score_computing, end_score_computing, start_decoding, star_decoding, end_decoding;
-  gettimeofday(&start, NULL);
+  //gettimeofday(&start, NULL);
 
-  if (options_->evaluate()) BeginEvaluation();
+  //if (options_->evaluate()) BeginEvaluation();
+
 
   reader_->Open(options_->GetTestFilePath());
   writer_->Open(options_->GetOutputFilePath());
 
   int num_instances = 0;
   Instance *instance = reader_->GetNext();
-  cout << "writing updated scores ... " << endl;
+
+  //cout << "writing updated scores ... " << endl;
   while (instance) {
+	  LOG(INFO) << "LOOP START";
     Instance *formatted_instance = GetFormattedInstance(instance);
+    LOG(INFO) << "2";
     MakeParts(formatted_instance, parts, &gold_outputs);
     MakeFeatures(formatted_instance, parts, features);
-    gettimeofday(&start_score_computing, NULL);
-    ComputeScores(formatted_instance, parts, features, &scores);
-    gettimeofday(&end_score_computing, NULL);
+    //gettimeofday(&start_score_computing, NULL);
+    //ComputeScores(formatted_instance, parts, features, &scores);
+    //gettimeofday(&end_score_computing, NULL);
 //    static_cast<DependencyInstanceNumeric*>(instance);
     /*gettimeofday(&start_decoding, NULL);
     decoder_->Decode(formatted_instance, parts, scores, &predicted_outputs);
@@ -609,13 +615,14 @@ void Pipe::Run() {
     }
 
     writer_->Write(output_instance);
-
+*/
     if (formatted_instance != instance) delete formatted_instance;
 
 
-    instance = reader_->GetNext();
-    ++num_instances;*/
+    ++num_instances;
+
     delete instance;
+    instance = reader_->GetNext();
   }
 
   delete parts;
@@ -624,9 +631,9 @@ void Pipe::Run() {
   writer_->Close();
   reader_->Close();
 
-  gettimeofday(&end, NULL);
-  LOG(INFO) << "Number of instances: " << num_instances;
-  LOG(INFO) << "Time: " << diff_ms(end,start);
+  //gettimeofday(&end, NULL);
+  //LOG(INFO) << "Number of instances: " << num_instances;
+  //LOG(INFO) << "Time: " << diff_ms(end,start);
 
-  if (options_->evaluate()) EndEvaluation();
+  //if (options_->evaluate()) EndEvaluation();
 }

@@ -53,9 +53,11 @@ void DependencyInstanceNumeric::Initialize(
 
   for (i = 0; i < length; i++) {
     string form = instance->GetForm(i);
+
     if (!form_case_sensitive) {
       transform(form.begin(), form.end(), form.begin(), ::tolower);
     }
+
     id = token_dictionary->GetFormId(form);
     CHECK_LT(id, 0xffff);
     if (id < 0) id = TOKEN_UNKNOWN;
